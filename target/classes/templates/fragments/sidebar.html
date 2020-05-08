@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Header</title>
+</head>
+
+<body>
+
+	<div class="sidebar" th:fragment="sidebar">
+		<nav class="sidebar-nav">
+			<ul class="nav">
+				<li class="nav-title"></li>
+
+				<li class="nav-item"><a th:if="${role}=='ROLE_ADMIN'"
+					href="/admin" class="nav-link active"> <i
+						class="icon icon-speedometer"></i> Dashboard
+				</a> <a th:if="${role}=='ROLE_SELLER'" href="/seller"
+					class="nav-link active"> <i class="icon icon-speedometer"></i>
+						Dashboard
+				</a> <a th:if="${role}=='ROLE_USER'" href="/user"
+					class="nav-link active"> <i class="icon icon-speedometer"></i>
+						Dashboard
+				</a></li>
+
+				<li class="nav-item nav-dropdown"><a href="#"
+					class="nav-link nav-dropdown-toggle"> <i
+						class="icon icon-target"></i> Categories <i
+						class="fa fa-caret-left"></i>
+				</a>
+
+					<ul class="nav-dropdown-items">
+
+						<li class="nav-item" th:if="${catList.empty}"><a href="#"
+							class="nav-link"> <i class="icon icon-target"></i> No
+								Category Availiable
+						</a></li>
+
+						<li class="nav-item" th:each="category : ${catList}">
+							<div class="row">
+								<div class="col-md-8">
+								<a
+							th:href="'/category/item/' + ${category.categoryId}"
+							class="nav-link"> <i class="icon icon-target"></i><span
+								th:text="${category.categoryName}"></span>
+							</a>
+								</div>
+
+								<div class="col-md-4" th:if="${role}=='ROLE_ADMIN'">
+								<a th:href="'/category/delete/' + ${category.categoryId}"><i class="fa fa-trash"></i></a>
+								</div>
+
+							</div>
+						</li>
+
+						<li class="nav-item" th:if="${role}=='ROLE_ADMIN'"><a
+							th:href="@{/category/add}" class="nav-link"> <i
+								class="fa fa-plus" aria-hidden="true"></i>Add New Category
+						</a></li>
+					</ul></li>
+
+				<!-- <li class="nav-item" th:if="${role}=='ROLE_SELLER'"><a href="#"
+					class="nav-link"> <i class="fa fa-plus" aria-hidden="true"></i>blah
+				</a></li>  -->
+<!--				<button type="button" class="btn btn-danger">view profile</button>-->
+
+				<li class="nav-item btn-danger" type="button" th:if="${role}=='ROLE_ADMIN'"><a
+						href="#" class="nav-link"> <i
+						class="fas fa-eye" aria-hidden="true"></i> view seller
+				</a></li>
+
+				<li class="nav-item" th:if="${role}=='ROLE_USER'"><a
+					th:href="@{/user/bid/history}" class="nav-link"> <i
+						class="fa fa-history" aria-hidden="true"></i> History
+				</a></li>
+			</ul>
+		</nav>
+	</div>
+
+</body>
+
+</html>
